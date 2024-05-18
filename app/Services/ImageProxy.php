@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,14 @@ class ImageProxy
     {
     }
 
-    public function proxy(string $url)
+    /**
+     * @return array{
+     *     content: mixed,
+     *     content_length: int,
+     *     mime_type: false|string
+     * }
+     */
+    public function proxy(string $url): array
     {
         if ($this->fileExists($url)) {
             return $this->serveFile($url);
@@ -33,7 +41,7 @@ class ImageProxy
         return $this->getDisk()->exists($this->makePath($url));
     }
 
-    private function getFile(string $url)
+    private function getFile(string $url): ?string
     {
         return $this->getDisk()->get($this->makePath($url));
     }
@@ -43,12 +51,12 @@ class ImageProxy
         return hash('sha256', $url);
     }
 
-    private function makePath(string $url)
+    private function makePath(string $url): string
     {
         return Arr::join(['imgproxy', $this->makeHash($url)], '/');
     }
 
-    private function fetchUrl(string $url)
+    private function fetchUrl(string $url): void
     {
         $res = $this->client->get($url);
         $body = $res->getBody()->getContents();
@@ -58,7 +66,11 @@ class ImageProxy
     }
 
     /**
-     * @return array{content: mixed, content_length: int, mime_type: false|string}
+     * @return array{
+     *     content: mixed,
+     *     content_length: int,
+     *     mime_type: false|string
+     * }
      */
     private function serveFile(string $url): array
     {
@@ -83,7 +95,7 @@ class ImageProxy
         ];
     }
 
-    private function getDisk()
+    private function getDisk(): Filesystem
     {
         return Storage::disk('public');
     }
