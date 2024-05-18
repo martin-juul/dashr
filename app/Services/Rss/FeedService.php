@@ -24,7 +24,7 @@ class FeedService
                 'title'       => $entry->getTitle(),
                 'createdAt'   => $createdAt,
                 'link'        => $entry->getLink(),
-                'description' => $entry->getDescription(),
+                'description' => strip_tags($entry->getDescription()),
                 'content'     => $entry->getContent(),
             ];
         }

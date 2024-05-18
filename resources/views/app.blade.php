@@ -16,6 +16,7 @@
 
 <body>
 <div id="dashrapproot"></div>
+<div id="portalhost"></div>
 </body>
 
 </html>
