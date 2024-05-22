@@ -2,6 +2,7 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { RssFeedEntry } from '@/rss-feeds/models.ts';
 import { cn } from '@/lib/utils.ts';
 import { useFeed } from '@/rss-feeds/use-feed.ts';
+import { formatDate } from 'date-fns';
 
 type FeedListProps = {
   items: RssFeedEntry[];
@@ -27,17 +28,15 @@ const FeedList = ({items}: FeedListProps) => {
             }}
           >
             <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
-                <div
-                  className={cn(
-                    'ml-auto text-xs',
-                    entry.selected === item.link
-                      ? 'text-foreground'
-                      : 'text-muted-foreground',
-                  )}
-                >
-                  {item.createdAt?.toLocaleString()}
-                </div>
+              <div
+                className={cn(
+                  'text-xs',
+                  entry.selected === item.link
+                    ? 'text-foreground'
+                    : 'text-muted-foreground',
+                )}
+              >
+                {item?.createdAt && formatDate(item.createdAt, 'dd-mm-y hh:ii:s')}
               </div>
               <div className="text-xs font-medium">{item.title}</div>
             </div>

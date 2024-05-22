@@ -15,12 +15,11 @@ const RssFeedViewer = ({feed}: Props) => {
       <ResizablePanelGroup
         direction="horizontal"
       >
-        <ResizableHandle withHandle />
         <ResizablePanel>
           <FeedList items={feed.entries}/>
         </ResizablePanel>
+        <ResizableHandle />
         <ResizablePanel>
-
           <FeedDisplay entry={feed.entries.find((item) => item.link === entry.selected) || null}/>
         </ResizablePanel>
       </ResizablePanelGroup>

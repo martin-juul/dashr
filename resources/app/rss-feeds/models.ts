@@ -1,3 +1,5 @@
+import { PaginatedResponse } from '@/lib/paginated-response.ts';
+
 export interface RssFeedEntry {
   title: string;
   createdAt: Date | null;
@@ -11,3 +13,14 @@ export interface RssFeed {
   link: string;
   entries: RssFeedEntry[];
 }
+
+export interface Subscription {
+  id: number;
+  title: string;
+  url: string;
+  logo: string | null;
+  created: Date;
+  updatedAt: Date;
+}
+
+export type SubscriptionResponse = PaginatedResponse<Subscription>;
