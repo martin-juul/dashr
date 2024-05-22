@@ -1,7 +1,8 @@
-import { RssFeedEntry } from '@/rss-feeds/models.ts';
-import { format } from 'date-fns';
-import { Separator } from '@/components/ui/separator.tsx';
 import { useEffect, useState } from 'react';
+import { RssFeedEntry } from '@/rss-feeds/models';
+import { format } from 'date-fns';
+import { Separator } from '@/components/ui/separator';
+import { proxyImgUrls } from '@/lib';
 
 type Props = {
   entry: RssFeedEntry | null
@@ -11,14 +12,7 @@ const FeedDisplay = ({entry}: Props) => {
 
   useEffect(() => {
     let htmlstr = entry?.content ?? entry?.description ?? '';
-
-    // Define the regular expression
-    const imgRegex = /<img[^>]+src="(.*?)"/g;
-
-    // Replace the src attribute in img tags
-    htmlstr = htmlstr.replace(imgRegex, (match, src) => {
-      return match.replace(src, `https://dashr.test/api/imageproxy?url=${encodeURIComponent(src)}`);
-    });
+    htmlstr = proxyImgUrls(htmlstr);
 
 
     setHtml(htmlstr);

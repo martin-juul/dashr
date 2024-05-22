@@ -30,7 +30,8 @@ const RssFeedsPage = () => {
           <SubscriptionManager/>
         </ResizablePanel>
         <ResizableHandle/>
-        <ResizablePanel>
+        <ResizablePanel minSize={90}>
+          {feedFetch.isLoading && <p>Loading feed</p>}
           {feed && <RssFeedViewer feed={feed}/>}
         </ResizablePanel>
       </ResizablePanelGroup>

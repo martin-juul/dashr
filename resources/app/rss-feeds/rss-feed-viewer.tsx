@@ -19,7 +19,7 @@ const RssFeedViewer = ({feed}: Props) => {
           <FeedList items={feed.entries}/>
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>
+        <ResizablePanel minSize={80}>
           <FeedDisplay entry={feed.entries.find((item) => item.link === entry.selected) || null}/>
         </ResizablePanel>
       </ResizablePanelGroup>
